@@ -1,7 +1,7 @@
 package numbersco.mathswiz.multiplication.service;
 
 
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +15,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
+
 import numbersco.mathswiz.multiplication.domain.Multiplication;
+import numbersco.mathswiz.multiplication.domain.MultiplicationResultAttempt;
+import numbersco.mathswiz.multiplication.domain.User;;
 
 /**
  * MultiplicationServiceTest
@@ -40,7 +43,28 @@ public void setUp() {
 
     assertThat(multiplication.getFactorA()).isEqualTo(50);
     assertThat(multiplication.getFactorB()).isEqualTo(30);
-    assertThat(multiplication.getResult()).isEqualTo(1500);
+  }
+
+  @Test
+  public void checkCorrectAttemptTest() {
+    Multiplication multiplication = new Multiplication(50, 60);
+    User user = new User("john_doe");
+    MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3000);
+
+    boolean attemptResult = multiplicationServiceImpl.checkAttempt(attempt);
+
+    assertThat(attemptResult).isTrue();
+  }
+
+  @Test
+  public void checkWrongAttemptTest() {
+    Multiplication multiplication = new Multiplication(50, 60);
+    User user = new User("john_doe");
+    MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3010);
+
+    boolean attemptResult = multiplicationServiceImpl.checkAttempt(attempt);
+
+    assertThat(attemptResult).isFalse();
   }
 
 }
