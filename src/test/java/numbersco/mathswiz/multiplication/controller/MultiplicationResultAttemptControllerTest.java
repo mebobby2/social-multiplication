@@ -22,7 +22,6 @@ import numbersco.mathswiz.multiplication.domain.User;
 import numbersco.mathswiz.multiplication.domain.Multiplication;
 import numbersco.mathswiz.multiplication.domain.MultiplicationResultAttempt;
 import numbersco.mathswiz.multiplication.service.MultiplicationService;
-import numbersco.mathswiz.multiplication.controller.MultiplicationResultAttemptController.ResultResponse;
 
 /**
  * MultiplicationResultAttemptControllerTest
@@ -37,7 +36,6 @@ public class MultiplicationResultAttemptControllerTest {
   private MockMvc mvc;
 
   private JacksonTester<MultiplicationResultAttempt> jsonResult;
-  private JacksonTester<ResultResponse> jsonResponse;
 
   @Before
   public void setup() {
@@ -55,21 +53,18 @@ public class MultiplicationResultAttemptControllerTest {
   }
 
   void genericParameterizedTest(final boolean correct) throws Exception {
-    given(multiplicationService
-      .checkAttempt(any(MultiplicationResultAttempt.class)))
-      .willReturn(correct);
+    given(multiplicationService.checkAttempt(any(MultiplicationResultAttempt.class))).willReturn(correct);
     User user = new User("john");
     Multiplication multiplication = new Multiplication(50, 70);
-    MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3500);
+    MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3500, false);
 
-    MockHttpServletResponse response = mvc.perform(
-      post("/results").contentType(MediaType.APPLICATION_JSON)
-        .content(jsonResult.write(attempt).getJson()))
+    MockHttpServletResponse response = mvc
+        .perform(post("/results").contentType(MediaType.APPLICATION_JSON).content(jsonResult.write(attempt).getJson()))
         .andReturn().getResponse();
 
     assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    assertThat(response.getContentAsString()).isEqualTo(
-      jsonResponse.write(new ResultResponse(correct)).getJson());
+    assertThat(response.getContentAsString())
+        .isEqualTo(jsonResult.write(new MultiplicationResultAttempt(attempt.getUser(), attempt.getMultiplication(),
+            attempt.getResultAttempt(), correct)).getJson());
   }
-
 }
