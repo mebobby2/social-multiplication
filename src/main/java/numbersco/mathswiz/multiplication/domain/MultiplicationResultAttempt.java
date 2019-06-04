@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import javax.persistence.*;
 
 /**
  * MultiplicationResultAttempt
@@ -12,12 +13,22 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
+@Entity
 public final class MultiplicationResultAttempt {
+  @Id
+  @GeneratedValue
+  private Long id;
 
+
+  @ManyToOne(cascade =  CascadeType.PERSIST)
+  @JoinColumn(name = "USER_ID")
   private final User user;
-  private final Multiplication multiplication;
-  private final int resultAttempt;
 
+  @ManyToOne(cascade =  CascadeType.PERSIST)
+  @JoinColumn(name = "MULTIPLICATION_ID")
+  private final Multiplication multiplication;
+
+  private final int resultAttempt;
   private final boolean correct;
 
   MultiplicationResultAttempt() {
