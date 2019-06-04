@@ -13,7 +13,7 @@
 
 ## Tests
 * ```./mvnw test```
-* ```mvnw -Dtest=MultiplicationServiceTest test```
+* ```./mvnw -Dtest=MultiplicationServiceTest test```
 
 ## Book Source Code
 https://github.com/microservices-practical
