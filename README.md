@@ -25,7 +25,7 @@
 https://github.com/microservices-practical
 
 ## Upto
-Page 68
+Page 89
 
 
-New Requirements for Data Persistence
+Once we have our repositories, we want to use them
