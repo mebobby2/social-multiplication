@@ -25,7 +25,7 @@
 https://github.com/microservices-practical
 
 ## Upto
-Page 89
+Page 96
 
 
-Once we have our repositories, we want to use them
+Completing User Story 2
