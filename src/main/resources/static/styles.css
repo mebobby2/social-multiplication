@@ -11,3 +11,7 @@ body {
   display: table-cell;
   vertical-align: middle;
 }
+
+#stats-body td {
+  text-align: center;
+}
