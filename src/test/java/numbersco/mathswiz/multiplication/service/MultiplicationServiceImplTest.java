@@ -3,10 +3,12 @@ package numbersco.mathswiz.multiplication.service;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,6 +85,20 @@ public void setUp() {
 
     assertThat(attemptResult).isFalse();
     verify(attempRepository).save(attempt);
+  }
+
+  @Test
+  public void retrieveStatsTest() {
+    Multiplication multiplication = new Multiplication(50, 60);
+    User user = new User("john_doe");
+    MultiplicationResultAttempt attempt1 = new MultiplicationResultAttempt(user, multiplication, 3010, false);
+    MultiplicationResultAttempt attempt2 = new MultiplicationResultAttempt(user, multiplication, 3051, false);
+    List<MultiplicationResultAttempt> latestAttempts = Lists.newArrayList(attempt1, attempt2);
+    given(attempRepository.findTop5ByUserAliasOrderByIdDesc("john_doe")).willReturn(latestAttempts);
+
+    List<MultiplicationResultAttempt> latestAttemptsResult = multiplicationServiceImpl.getStatsForUser("john_doe");
+
+    assertThat(latestAttemptsResult).isEqualTo(latestAttempts);
   }
 
 }

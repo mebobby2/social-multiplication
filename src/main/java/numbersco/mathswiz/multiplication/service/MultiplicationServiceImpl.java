@@ -1,5 +1,6 @@
 package numbersco.mathswiz.multiplication.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +59,10 @@ public class MultiplicationServiceImpl implements MultiplicationService {
 
     return isCorrect;
   }
+
+  @Override
+  public List<MultiplicationResultAttempt> getStatsForUser(String userAlias) {
+    return attemptRepository.findTop5ByUserAliasOrderByIdDesc(userAlias);
+  }
+
 }
