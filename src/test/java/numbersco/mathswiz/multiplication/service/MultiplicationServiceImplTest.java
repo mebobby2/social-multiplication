@@ -20,10 +20,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.eq;
 
 import numbersco.mathswiz.multiplication.domain.Multiplication;
 import numbersco.mathswiz.multiplication.domain.MultiplicationResultAttempt;
 import numbersco.mathswiz.multiplication.domain.User;
+import numbersco.mathswiz.multiplication.event.EventDispatcher;
+import numbersco.mathswiz.multiplication.event.MultiplicationSolvedEvent;
 import numbersco.mathswiz.multiplication.repository.MultiplicationResultAttemptRepository;
 import numbersco.mathswiz.multiplication.repository.UserRepository;;
 
@@ -42,10 +45,13 @@ public class MultiplicationServiceImplTest {
   @Mock
   private UserRepository userRepository;
 
+  @Mock
+  private EventDispatcher eventDispatcher;
+
   @Before
 public void setUp() {
   MockitoAnnotations.initMocks(this);
-  multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService, attempRepository, userRepository);
+  multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService, attempRepository, userRepository, eventDispatcher);
 }
 
   @Test
@@ -64,6 +70,8 @@ public void setUp() {
     User user = new User("john_doe");
     MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3000, false);
     MultiplicationResultAttempt verifiedAttempt = new MultiplicationResultAttempt(user, multiplication, 3000, true);
+    MultiplicationSolvedEvent event = new MultiplicationSolvedEvent(attempt.getId(),
+                attempt.getUser().getId(), true);
 
     given(userRepository.findByAlias("john_doe")).willReturn(Optional.empty());
 
@@ -71,6 +79,7 @@ public void setUp() {
 
     assertThat(attemptResult).isTrue();
     verify(attempRepository).save(verifiedAttempt);
+    verify(eventDispatcher).send(eq(event));
   }
 
   @Test
@@ -78,6 +87,8 @@ public void setUp() {
     Multiplication multiplication = new Multiplication(50, 60);
     User user = new User("john_doe");
     MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3010, false);
+    MultiplicationSolvedEvent event = new MultiplicationSolvedEvent(attempt.getId(),
+                attempt.getUser().getId(), false);
 
     given(userRepository.findByAlias("john_doe")).willReturn(Optional.empty());
 
@@ -85,6 +96,7 @@ public void setUp() {
 
     assertThat(attemptResult).isFalse();
     verify(attempRepository).save(attempt);
+    verify(eventDispatcher).send(eq(event));
   }
 
   @Test

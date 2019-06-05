@@ -13,6 +13,8 @@ import numbersco.mathswiz.multiplication.domain.MultiplicationResultAttempt;
 import numbersco.mathswiz.multiplication.repository.MultiplicationResultAttemptRepository;
 import numbersco.mathswiz.multiplication.repository.UserRepository;
 import numbersco.mathswiz.multiplication.domain.User;
+import numbersco.mathswiz.multiplication.event.EventDispatcher;
+import numbersco.mathswiz.multiplication.event.MultiplicationSolvedEvent;
 
 /**
  * MultiplicationServiceImpl
@@ -23,15 +25,18 @@ public class MultiplicationServiceImpl implements MultiplicationService {
   private RandomGeneratorService randomGeneratorService;
   private MultiplicationResultAttemptRepository attemptRepository;
   private UserRepository userRepository;
+  private EventDispatcher eventDispatcher;
 
   @Autowired
   public MultiplicationServiceImpl(
     final RandomGeneratorService randomGeneratorService,
     final MultiplicationResultAttemptRepository attemptRepository,
-    final UserRepository userRepository) {
+    final UserRepository userRepository,
+    final EventDispatcher eventDispatcher) {
     this.randomGeneratorService = randomGeneratorService;
     this.attemptRepository = attemptRepository;
     this.userRepository = userRepository;
+    this.eventDispatcher = eventDispatcher;
   }
 
   @Override
@@ -56,6 +61,11 @@ public class MultiplicationServiceImpl implements MultiplicationService {
       user.orElse(attempt.getUser()), attempt.getMultiplication(), attempt.getResultAttempt(), isCorrect);
 
     attemptRepository.save(checkedAttempt);
+
+    eventDispatcher.send(new MultiplicationSolvedEvent(
+      checkedAttempt.getId(),
+      checkedAttempt.getUser().getId(),
+      checkedAttempt.isCorrect()));
 
     return isCorrect;
   }
