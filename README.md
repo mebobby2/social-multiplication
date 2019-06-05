@@ -60,6 +60,15 @@ of event-driven architecture. In general, it’s more advisable to let the consu
 
 But make sure your events are NOT too skinny. If your event does not include all the data that consumers need, your service could be bombarded by extra REST requests from consumers.
 
+## Trouble Shooting
+### No separate test db
+If tests fail with this message:
+```
+HHH000342: Could not obtain connection to query metadata : Database may be already in use: null. Possible solutions: close all other connection(s); use the server mode [90020-199]
+```
+It means you are probably running the server in the background. It seems only one connection to the db is allowed.
+
+Solution is not to have server running when running tests. Or set up a separate test db.
 
 
 
