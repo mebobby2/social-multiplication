@@ -67,7 +67,7 @@ But make sure your events are NOT too skinny. If your event does not include all
 https://github.com/microservices-practical
 
 ## Upto
-Page 96
+Page 143
 
 
-Completing User Story 2
+Deeper Look at the New Gamification
