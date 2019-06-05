@@ -47,6 +47,19 @@ Consider a better approach: plan a monolithic application first. Plan it in a wa
 * Fault Tolerance. As a consequence of not having (or minimizing) transactions, fault tolerance becomes more important in these systems. One of the services might not be able to complete its part of the process, but that shouldn’t make the whole system fail. You need to prevent that from happening (e.g., by aiming for high availability with microservice redundancy and load-balancing) and also think of a way to recover from possible errors (e.g., by having a maintenance console from which you can recreate events).
 * Orchestration and Monitoring. Not having a centralized orchestration layer might be problematic in systems where it’s critical to have process monitoring. In an event-driven architecture, you span processes across services that are triggering and reacting to events. You can’t follow them in a centralized way: they’re distributed across your microservices. To monitor such processes, you need to implement mechanisms to trace the flow of events and you need a common logging system where you can keep track of what’s going on between services. We can implement our own integrated mechanism to correlate events (by tagging them as they cross the services), or we can use an existing tool like Zipkin.
 
+### Use Skinny events
+To illustrate the risks of fat events, I’ll use another example. Imagine that we are receiving events when user details are updated, and we decided to model the event including the changes made to the user. Think of the case in which there are multiple subscribers, one of them is failing and the broker is dispatching those rejected messages back again. Now the order of events is not the real sequence of the changes. We can’t be sure on the consumer’s side if that change reflects the latest status. As a possible solution, we could use a timestamp on events, but then extra logic is needed on the consumer’s end to handle time: discarding older changes, etc.
+
+Including data in events modeling changes in a mutable object is risky. In this case, it might be better to notify that the user with the given identifier has been updated, and leave the consumers to ask for the latest state whenever they decide to process their logic.
+
+Another potential drawback of including too much data in
+events can be shown in the following example: if in future we
+include an extra microservice (e.g., a stats analyzer) and it needs to
+use the timestamp of attempts, we could just add the timestamp to MultiplicationSolvedEvent. But, in that case, we would be tailoring the events from the publisher’s side to the needs of all our consumers. We would have not only a fat event but also a smart publisher who knows too much about the business logic of their consumers: an anti-pattern
+of event-driven architecture. In general, it’s more advisable to let the consumers ask for the data they need and avoid including it as part of the event’s content.
+
+But make sure your events are NOT too skinny. If your event does not include all the data that consumers need, your service could be bombarded by extra REST requests from consumers.
+
 
 
 
