@@ -1,0 +1,8 @@
+numbersco/mathswiz/multiplication/event/EventDispatcher.class
+numbersco/mathswiz/multiplication/repository/MultiplicationRepository.class
+numbersco/mathswiz/multiplication/configuration/RabbitMQConfiguration.class
+numbersco/mathswiz/multiplication/repository/UserRepository.class
+numbersco/mathswiz/multiplication/SocialMultiplicationApplication.class
+numbersco/mathswiz/multiplication/controller/MultiplicationController.class
+numbersco/mathswiz/multiplication/event/MultiplicationSolvedEvent.class
+numbersco/mathswiz/multiplication/repository/MultiplicationResultAttemptRepository.class
