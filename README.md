@@ -3,12 +3,21 @@
 ## Prerequisites
 * SpringBoot 1.5.21
 * Java 8 (1.8)
+* RabbitMQ
 
 ## Installation
 ### Java JDK (not JRE)
 1.  Download JDK (https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and run installer
 
+### RabbitMQ
+1. ```brew install rabbitmq```
+
 ## Run
+### Broker
+1. ```brew services start rabbitmq```
+2. ```http://localhost:15672``` (username: guest, password: guest)
+
+### Multiplication Service
 1. ```cd multiplication```
 2. ```./mvnw spring-boot:run```
 3. Visit: ```http://localhost:8080```
