@@ -72,6 +72,44 @@ of event-driven architecture. In general, it’s more advisable to let the consu
 
 But make sure your events are NOT too skinny. If your event does not include all the data that consumers need, your service could be bombarded by extra REST requests from consumers.
 
+### Spring Autowire
+1. Finds bean by type
+```
+@Autowired
+public SomeClass(final RestTemplate restTemplate) {
+  ...
+}
+
+@Bean
+public RestTemplate bean1(RestTemplateBuilder builder) {
+  ...
+}
+```
+
+In the above example, even though the qualifier names are different (restTemplate and bean1), Spring will still be able to resolve the bean because there is only one bean of type RestTemplate.
+
+2. Finds bean by qualifier
+
+However, if there are two beans of RestTemplate configured:
+```
+@Bean
+public RestTemplate bean1(RestTemplateBuilder builder) {
+  ...
+}
+
+@Bean
+public RestTemplate bean2(RestTemplateBuilder builder) {
+  ...
+}
+```
+The autowiring above will fail because there is disambiguation since there are two beans it resolves to. The above wiring will need to be altered to use the qualifier name to choose which bean.
+```
+@Autowired
+public SomeClass(final RestTemplate bean2) {
+  ...
+}
+```
+
 ## Trouble Shooting
 ### No separate test db
 If tests fail with this message:
