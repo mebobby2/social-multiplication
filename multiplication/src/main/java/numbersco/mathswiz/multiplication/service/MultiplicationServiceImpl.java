@@ -28,11 +28,9 @@ public class MultiplicationServiceImpl implements MultiplicationService {
   private EventDispatcher eventDispatcher;
 
   @Autowired
-  public MultiplicationServiceImpl(
-    final RandomGeneratorService randomGeneratorService,
-    final MultiplicationResultAttemptRepository attemptRepository,
-    final UserRepository userRepository,
-    final EventDispatcher eventDispatcher) {
+  public MultiplicationServiceImpl(final RandomGeneratorService randomGeneratorService,
+      final MultiplicationResultAttemptRepository attemptRepository, final UserRepository userRepository,
+      final EventDispatcher eventDispatcher) {
     this.randomGeneratorService = randomGeneratorService;
     this.attemptRepository = attemptRepository;
     this.userRepository = userRepository;
@@ -53,19 +51,16 @@ public class MultiplicationServiceImpl implements MultiplicationService {
 
     Assert.isTrue(!attempt.isCorrect(), "You can't send an attempt marked as correct!!");
 
-    boolean isCorrect = attempt.getResultAttempt() ==
-      attempt.getMultiplication().getFactorA() *
-      attempt.getMultiplication().getFactorB();
+    boolean isCorrect = attempt.getResultAttempt() == attempt.getMultiplication().getFactorA()
+        * attempt.getMultiplication().getFactorB();
 
-    MultiplicationResultAttempt checkedAttempt = new MultiplicationResultAttempt(
-      user.orElse(attempt.getUser()), attempt.getMultiplication(), attempt.getResultAttempt(), isCorrect);
+    MultiplicationResultAttempt checkedAttempt = new MultiplicationResultAttempt(user.orElse(attempt.getUser()),
+        attempt.getMultiplication(), attempt.getResultAttempt(), isCorrect);
 
     attemptRepository.save(checkedAttempt);
 
-    eventDispatcher.send(new MultiplicationSolvedEvent(
-      checkedAttempt.getId(),
-      checkedAttempt.getUser().getId(),
-      checkedAttempt.isCorrect()));
+    eventDispatcher.send(new MultiplicationSolvedEvent(checkedAttempt.getId(), checkedAttempt.getUser().getId(),
+        checkedAttempt.isCorrect()));
 
     return isCorrect;
   }
@@ -75,4 +70,8 @@ public class MultiplicationServiceImpl implements MultiplicationService {
     return attemptRepository.findTop5ByUserAliasOrderByIdDesc(userAlias);
   }
 
+  @Override
+  public MultiplicationResultAttempt getResultById(final Long resultId) {
+    return attemptRepository.findOne(resultId);
+  }
 }
