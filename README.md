@@ -88,7 +88,6 @@ Solution is not to have server running when running tests. Or set up a separate 
 https://github.com/microservices-practical
 
 ## Upto
-Page 153
+Page 155
 
-
-The Business Logic
+EXERCISE
