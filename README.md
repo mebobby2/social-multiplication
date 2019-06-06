@@ -9,18 +9,21 @@
 1.  Download JDK (https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and run installer
 
 ## Run
-1. ```./mvnw spring-boot:run```
-2. Visit: ```http://localhost:8080```
-3. DB Portal: ```http://localhost:8080/h2-console```
+1. ```cd multiplication```
+2. ```./mvnw spring-boot:run```
+3. Visit: ```http://localhost:8080```
+4. DB Portal: ```http://localhost:8080/h2-console```
 
 ## Tests
-* ```./mvnw test```
-* ```./mvnw -Dtest=MultiplicationServiceTest test```
+1 ```cd multiplication```
+2 ```./mvnw test```
+3 ```./mvnw -Dtest=MultiplicationServiceTest test``` (run a specific test)
 
 ## Deploying
-1. Package into Jar: ```./mvnw package```
-2. ```cd ./target```
-3. Run (computer must have JRE installed): ```java -jar social-multiplication-v3-0.3.0-SNAPSHOT.jar```
+1 ```cd multiplication```
+2. Package into Jar: ```./mvnw package```
+3. ```cd ./target```
+4. Run (computer must have JRE installed): ```java -jar social-multiplication-v3-0.3.0-SNAPSHOT.jar```
 
 ## Notes
 ### Monolith First
