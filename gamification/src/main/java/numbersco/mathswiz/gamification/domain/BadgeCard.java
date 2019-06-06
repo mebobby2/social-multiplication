@@ -1,4 +1,4 @@
-package gamification.src.main.java.numbersco.mathswiz.gamification.domain;
+package numbersco.mathswiz.gamification.domain;
 
 
 import javax.persistence.Column;
@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import gamification.src.main.java.numbersco.mathswiz.gamification.domain.Badge;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

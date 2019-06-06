@@ -1,4 +1,4 @@
-package gamification.src.main.java.numbersco.mathswiz.gamification.domain;
+package numbersco.mathswiz.gamification.domain;
 
 /**
  * Badge
