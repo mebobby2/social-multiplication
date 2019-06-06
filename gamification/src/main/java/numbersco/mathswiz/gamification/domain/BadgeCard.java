@@ -30,7 +30,7 @@ public final class BadgeCard {
   private final Badge badge;
 
   public BadgeCard() {
-    this(null, null, 0, null);
+    this(null, null, 0L, null);
   }
 
   public BadgeCard(final Long userId, final Badge badge) {
