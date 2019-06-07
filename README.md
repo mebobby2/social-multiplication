@@ -20,6 +20,7 @@
 ### Jetty (web server for UI)
 1. ```cd ui```
 2. ```java -jar ~/Documents/development/jetty/start.jar```
+3. Visit: http://localhost:9090/ui
 
 ### Broker
 1. ```brew services start rabbitmq```
@@ -28,8 +29,7 @@
 ### Multiplication Service
 1. ```cd multiplication```
 2. ```./mvnw spring-boot:run```
-3. Visit: ```http://localhost:8080```
-4. DB Portal: ```http://localhost:8080/h2-console```
+3. DB Portal: ```http://localhost:8080/h2-console```
 
 ## Tests
 1 ```cd multiplication```
