@@ -12,7 +12,15 @@
 ### RabbitMQ
 1. ```brew install rabbitmq```
 
+### Jetty
+1. Download latest release (.tgz file) from https://www.eclipse.org/jetty/download.html
+2. Unzip it into a some location you have read and write access (```~/Documents/development``` for now)
+
 ## Run
+### Jetty (web server for UI)
+1. ```cd ui```
+2. ```java -jar ~/Documents/development/jetty/start.jar```
+
 ### Broker
 1. ```brew services start rabbitmq```
 2. ```http://localhost:15672``` (username: guest, password: guest)
@@ -120,12 +128,17 @@ It means you are probably running the server in the background. It seems only on
 
 Solution is not to have server running when running tests. Or set up a separate test db.
 
+## Jetty
+To create a new jetty base:
+1. Create a new folder for the jetty base
+2. cd to new folder and execute this command: ```java -jar ~/Documents/development/jetty/start.jar --add-to-startd=http,deploy```
+
 
 
 ## Book Source Code
 https://github.com/microservices-practical
 
 ## Upto
-Page 187
+Page 191
 
-CHAPTER 5
+First, we need to download and install Jetty in our
