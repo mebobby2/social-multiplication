@@ -144,6 +144,6 @@ To create a new jetty base:
 https://github.com/microservices-practical
 
 ## Upto
-Page 192
+Page 210
 
-Connecting UI with Gamification
+Service Discovery and Load Balancing
