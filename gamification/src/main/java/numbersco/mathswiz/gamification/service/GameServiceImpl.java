@@ -105,7 +105,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameStats retrieveStatsForUser(final Long userId) {
-        int score = scoreCardRepository.getTotalScoreForUser(userId);
+        Integer score = scoreCardRepository.getTotalScoreForUser(userId);
+
+        if (score == null) {
+            return new GameStats();
+        }
+
         List<BadgeCard> badgeCards = badgeCardRepository
                 .findByUserIdOrderByBadgeTimestampDesc(userId);
         return new GameStats(userId, score, badgeCards.stream()

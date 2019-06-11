@@ -17,7 +17,7 @@ public interface ScoreCardRepository extends CrudRepository<ScoreCard, Long>{
          "FROM numbersco.mathswiz.gamification.domain.ScoreCard s " +
          "WHERE s.userId = :userId " +
          "GROUP BY s.userId")
-  int getTotalScoreForUser(@Param("userId") final Long userId);
+  Integer getTotalScoreForUser(@Param("userId") final Long userId);
 
   @Query("SELECT NEW numbersco.mathswiz.gamification.domain.LeaderBoardRow(s.userId, SUM(s.score)) " +
          "FROM numbersco.mathswiz.gamification.domain.ScoreCard s " +
