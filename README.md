@@ -31,6 +31,11 @@
 2. ```./mvnw spring-boot:run```
 3. DB Portal: ```http://localhost:8080/h2-console```
 
+### Gamification Service
+1. ```cd gamification```
+2. ```./mvnw spring-boot:run```
+3. DB Portal: ```http://localhost:8081/h2-console```
+
 ## Tests
 1 ```cd multiplication```
 2 ```./mvnw test```
