@@ -9,7 +9,8 @@ nohup ./mvnw spring-boot:run &
 popd
 
 pushd multiplication
-nohup ./mvnw spring-boot:run &
+nohup ./mvnw spring-boot:run -Drun.arguments="--server.port=8080" &
+nohup ./mvnw spring-boot:run -Drun.arguments="--server.port=8180" &
 popd
 
 pushd gamification
