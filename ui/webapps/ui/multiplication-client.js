@@ -1,80 +1,41 @@
-function updateMultiplication() {
+var SERVER_URL = "http://localhost:8000/api";
+
+function updateLeaderBoard() {
     $.ajax({
-        url: "http://localhost:8080/multiplications/random"
+        url: SERVER_URL + "/leaders"
     }).then(function(data) {
-        // Cleans the form
-        $("#attempt-form").find( "input[name='result-attempt']" ).val("");
-        $("#attempt-form").find( "input[name='user-alias']" ).val("");
-        // Gets a random challenge from API and loads the data in the HTML
-        $('.multiplication-a').empty().append(data.factorA);
-        $('.multiplication-b').empty().append(data.factorB);
+        $('#leaderboard-body').empty();
+        data.forEach(function(row) {
+            $('#leaderboard-body').append('<tr><td>' + row.userId + '</td>' +
+                '<td>' + row.totalScore + '</td>');
+        });
     });
 }
 
-function updateResults(alias) {
-    var userId = -1;
+function updateStats(userId) {
     $.ajax({
-        async: false,
-        url: "http://localhost:8080/results?alias=" + alias,
+        url: SERVER_URL + "/stats?userId=" + userId,
         success: function(data) {
-            $('#results-div').show();
-            $('#results-body').empty();
-            data.forEach(function(row) {
-                $('#results-body').append('<tr><td>' + row.id + '</td>' +
-                    '<td>' + row.multiplication.factorA + ' x ' + row.multiplication.factorB + '</td>' +
-                    '<td>' + row.resultAttempt + '</td>' +
-                    '<td>' + (row.correct === true ? 'YES' : 'NO') + '</td></tr>');
-            });
-            userId = data[0].user.id;
+            $('#stats-div').show();
+            $('#stats-user-id').empty().append(userId);
+            $('#stats-score').empty().append(data.score);
+            $('#stats-badges').empty().append(data.badges.join());
+        },
+        error: function(data) {
+            $('#stats-div').show();
+            $('#stats-user-id').empty().append(userId);
+            $('#stats-score').empty().append(0);
+            $('#stats-badges').empty();
         }
     });
-    return userId;
 }
 
 $(document).ready(function() {
 
-    updateMultiplication();
+    updateLeaderBoard();
 
-    $("#attempt-form").submit(function( event ) {
-
-        // Don't submit the form normally
-        event.preventDefault();
-
-        // Get some values from elements on the page
-        var a = $('.multiplication-a').text();
-        var b = $('.multiplication-b').text();
-        var $form = $( this ),
-            attempt = $form.find( "input[name='result-attempt']" ).val(),
-            userAlias = $form.find( "input[name='user-alias']" ).val();
-
-        // Compose the data in the format that the API is expecting
-        var data = { user: { alias: userAlias}, multiplication: {factorA: a, factorB: b}, resultAttempt: attempt};
-
-        // Send the data using post
-        $.ajax({
-            url: 'http://localhost:8080/results',
-            type: 'POST',
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function(result){
-                if(result.correct) {
-                    $('.result-message').empty()
-                        .append("<p class='bg-success text-center'>The result is correct! Congratulations!</p>");
-                } else {
-                    $('.result-message').empty()
-                        .append("<p class='bg-danger text-center'>Ooops that's not correct! But keep trying!</p>");
-                }
-            }
-        });
-
-        updateMultiplication();
-
-        setTimeout(function(){
-            var userId = updateResults(userAlias);
-            updateStats(userId);
-            updateLeaderBoard();
-        }, 300);
+    $("#refresh-leaderboard").click(function( event ) {
+        updateLeaderBoard();
     });
+
 });
