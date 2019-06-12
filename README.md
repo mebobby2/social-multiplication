@@ -22,6 +22,11 @@
 2. ```java -jar ~/Documents/development/jetty/start.jar```
 3. Visit: http://localhost:9090/ui
 
+### API Gateway
+1. ```cd gateway```
+2. ```java -jar ~/Documents/development/jetty/start.jar```
+3. Visit: http://localhost:8000
+
 ### Broker
 1. ```brew services start rabbitmq```
 2. ```http://localhost:15672``` (username: guest, password: guest)
