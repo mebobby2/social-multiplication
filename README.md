@@ -24,6 +24,7 @@
 ### Service Registry
 1. ```cd service-registry```
 2. ```./mvnw spring-boot:run```
+3. Visit Eureka Dashboard: http://localhost:8761
 
 ### API Gateway
 1. ```cd gateway```
@@ -160,6 +161,6 @@ To create a new jetty base:
 https://github.com/microservices-practical
 
 ## Upto
-Page 210
+Page 249
 
-Service Discovery and Load Balancing
+Are Our Microservices Ready to Scale?
