@@ -24,8 +24,9 @@
 
 ### API Gateway
 1. ```cd gateway```
-2. ```java -jar ~/Documents/development/jetty/start.jar```
+2. ```./mvnw spring-boot:run```
 3. Visit: http://localhost:8000
+4. For Trace Debugging:  http://localhost:8000/trace
 
 ### Broker
 1. ```brew services start rabbitmq```
