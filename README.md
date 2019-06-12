@@ -17,20 +17,19 @@
 2. Unzip it into a some location you have read and write access (```~/Documents/development``` for now)
 
 ## Run
-### Jetty (web server for UI)
-1. ```cd ui```
-2. ```java -jar ~/Documents/development/jetty/start.jar```
-3. Visit: http://localhost:9090/ui
+### Broker
+1. ```brew services start rabbitmq```
+2. ```http://localhost:15672``` (username: guest, password: guest)
+
+### Service Registry
+1. ```cd service-registry```
+2. ```./mvnw spring-boot:run```
 
 ### API Gateway
 1. ```cd gateway```
 2. ```./mvnw spring-boot:run```
 3. Visit: http://localhost:8000
 4. For Trace Debugging:  http://localhost:8000/trace
-
-### Broker
-1. ```brew services start rabbitmq```
-2. ```http://localhost:15672``` (username: guest, password: guest)
 
 ### Multiplication Service
 1. ```cd multiplication```
@@ -41,6 +40,11 @@
 1. ```cd gamification```
 2. ```./mvnw spring-boot:run```
 3. DB Portal: ```http://localhost:8081/h2-console```
+
+### Jetty (web server for UI)
+1. ```cd ui```
+2. ```java -jar ~/Documents/development/jetty/start.jar```
+3. Visit: http://localhost:9090/ui
 
 ## Tests
 1 ```cd multiplication```
