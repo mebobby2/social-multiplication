@@ -1,3 +1,5 @@
+brew services start rabbitmq
+
 pushd service-registry
 nohup ./mvnw spring-boot:run &
 popd
@@ -17,5 +19,3 @@ popd
 pushd ui
 nohup java -jar ~/Documents/development/jetty/start.jar &
 popd
-
-brew services start rabbitmq
