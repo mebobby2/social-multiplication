@@ -170,6 +170,6 @@ To create a new jetty base:
 https://github.com/microservices-practical
 
 ## Upto
-Page 249
+Page 266
 
-Are Our Microservices Ready to Scale?
+Hystrix from a REST Client
