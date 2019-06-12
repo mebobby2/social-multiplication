@@ -138,7 +138,16 @@ Many people often get scared when conversations arise about having centralized p
 
 The key to making this kind of services work in a microservices infrastructure is to apply proper load balancing to them. to do that, we usually need to go a level deep, and use solutions such as an infrastructure Dns load balancer, in which for example our gateway located at http://gateway.ourwebapp.com is backed by three different server instances. Most cloud providers offer these services out of the box, and we can also implement it by ourselves with tools like nginx.
 
+### Scaling Microservices
+One of the most critical things when we start working with scalable systems is that we need to be aware of some important basic concepts when designing our microservices.
 
+#### Databases and Stateless Services
+Our services need to be stateless, meaning that they shouldn’t keep any data or state in memory. Otherwise, we need to have *session affinity*.
+
+In our system, the databases are embedded in the services, thus preventing us from scaling up correctly. Every instance of our service shouldn’t have its own database since that would cause retrieving different data per request. All instances need to keep their data in the same place, in the same, shared database server.
+
+#### Event-Driven Architecture and Load Balancing
+You need to make sure only one instance of a microservice processes an event triggered. Every service instance should act as a worker that connects to a shared queue in RabbitMQ. Only one instance consumes each event, processes it, and stores the result in the shared database.
 
 ## Trouble Shooting
 ### No separate test db
