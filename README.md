@@ -122,6 +122,12 @@ public SomeClass(final RestTemplate bean2) {
   ...
 }
 ```
+### Edge Services
+Many people often get scared when conversations arise about having centralized parts in a microservices architecture. parts that are critical, like routing and filtering, may become a single point of failure. this api gateway service in particular, as the gate to our microservices, is also known as an *edge service*.
+
+The key to making this kind of services work in a microservices infrastructure is to apply proper load balancing to them. to do that, we usually need to go a level deep, and use solutions such as an infrastructure Dns load balancer, in which for example our gateway located at http://gateway.ourwebapp.com is backed by three different server instances. Most cloud providers offer these services out of the box, and we can also implement it by ourselves with tools like nginx.
+
+
 
 ## Trouble Shooting
 ### No separate test db
