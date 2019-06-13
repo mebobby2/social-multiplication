@@ -182,8 +182,6 @@ To create a new jetty base:
 https://github.com/microservices-practical
 
 ## Upto
-Page 288
+Page 322
 
-EXERCISE
-
-Hystrix from a REST Client
+Upgrading to Spring Boot 2.0
