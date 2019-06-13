@@ -175,13 +175,3 @@ Solution is not to have server running when running tests. Or set up a separate 
 To create a new jetty base:
 1. Create a new folder for the jetty base
 2. cd to new folder and execute this command: ```java -jar ~/Documents/development/jetty/start.jar --add-to-startd=http,deploy```
-
-
-
-## Book Source Code
-https://github.com/microservices-practical
-
-## Upto
-Page 322
-
-Upgrading to Spring Boot 2.0
