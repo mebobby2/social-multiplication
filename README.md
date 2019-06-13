@@ -47,6 +47,9 @@
 2. ```java -jar ~/Documents/development/jetty/start.jar```
 3. Visit: http://localhost:9090/ui
 
+### Or use the Script
+```./start.sh``` and ```./stop.sh``` to stop all services
+
 ## Unit Tests
 1 ```cd multiplication```
 2 ```./mvnw test```
@@ -56,8 +59,10 @@
 2 ```./mvnw test```
 
 ### End-2-End Tests
-1 ```cd tests_e2e```
-2 ```./mvnw test```
+1. Start system: ```./start-test.sh```
+2 ```cd tests_e2e```
+3 ```./mvnw test```
+4. Stop system: ```./stop.sh```
 
 ## Deploying
 1 ```cd multiplication```
