@@ -1,4 +1,4 @@
-package numbersco.mathswiz.multiplication.service;
+package numbersco.mathswiz.multiplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
