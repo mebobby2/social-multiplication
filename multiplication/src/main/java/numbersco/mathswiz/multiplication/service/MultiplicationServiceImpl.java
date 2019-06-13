@@ -46,7 +46,7 @@ public class MultiplicationServiceImpl implements MultiplicationService {
 
   @Transactional
   @Override
-  public boolean checkAttempt(final MultiplicationResultAttempt attempt) {
+  public MultiplicationResultAttempt checkAttempt(final MultiplicationResultAttempt attempt) {
     Optional<User> user = userRepository.findByAlias(attempt.getUser().getAlias());
 
     Assert.isTrue(!attempt.isCorrect(), "You can't send an attempt marked as correct!!");
@@ -57,12 +57,12 @@ public class MultiplicationServiceImpl implements MultiplicationService {
     MultiplicationResultAttempt checkedAttempt = new MultiplicationResultAttempt(user.orElse(attempt.getUser()),
         attempt.getMultiplication(), attempt.getResultAttempt(), isCorrect);
 
-    attemptRepository.save(checkedAttempt);
+    MultiplicationResultAttempt storedAttempt = attemptRepository.save(checkedAttempt);
 
     eventDispatcher.send(new MultiplicationSolvedEvent(checkedAttempt.getId(), checkedAttempt.getUser().getId(),
         checkedAttempt.isCorrect()));
 
-    return isCorrect;
+    return storedAttempt;
   }
 
   @Override

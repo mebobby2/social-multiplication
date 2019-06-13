@@ -40,67 +40,94 @@ public class MultiplicationResultAttemptControllerTest {
   @Autowired
   private MockMvc mvc;
 
-  private JacksonTester<MultiplicationResultAttempt> jsonResult;
+  // These objects will be magically initialized by the initFields method below.
+  private JacksonTester<MultiplicationResultAttempt> jsonResultAttempt;
   private JacksonTester<List<MultiplicationResultAttempt>> jsonResultAttemptList;
 
   @Before
   public void setup() {
-    JacksonTester.initFields(this, new ObjectMapper());
+      JacksonTester.initFields(this, new ObjectMapper());
   }
 
   @Test
   public void postResultReturnCorrect() throws Exception {
-    genericParameterizedTest(true);
+      genericParameterizedTest(true);
   }
 
   @Test
   public void postResultReturnNotCorrect() throws Exception {
-    genericParameterizedTest(false);
+      genericParameterizedTest(false);
   }
 
   void genericParameterizedTest(final boolean correct) throws Exception {
-    given(multiplicationService.checkAttempt(any(MultiplicationResultAttempt.class))).willReturn(correct);
-    User user = new User("john");
-    Multiplication multiplication = new Multiplication(50, 70);
-    MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3500, false);
+      // given (remember we're not testing here the service itself)
+      User user = new User("john");
+      Multiplication multiplication = new Multiplication(50, 70);
+      MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(
+              user, multiplication, 3500, correct);
+      given(multiplicationService
+              .checkAttempt(any(MultiplicationResultAttempt.class)))
+              .willReturn(attempt);
 
-    MockHttpServletResponse response = mvc
-        .perform(post("/results").contentType(MediaType.APPLICATION_JSON).content(jsonResult.write(attempt).getJson()))
-        .andReturn().getResponse();
+      // when
+      MockHttpServletResponse response = mvc.perform(
+              post("/results").contentType(MediaType.APPLICATION_JSON)
+                      .content(jsonResultAttempt.write(attempt).getJson()))
+              .andReturn().getResponse();
 
-    assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    assertThat(response.getContentAsString())
-        .isEqualTo(jsonResult.write(new MultiplicationResultAttempt(attempt.getUser(), attempt.getMultiplication(),
-            attempt.getResultAttempt(), correct)).getJson());
+      // then
+      assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+      assertThat(response.getContentAsString()).isEqualTo(
+              jsonResultAttempt.write(
+                      new MultiplicationResultAttempt(attempt.getUser(),
+                              attempt.getMultiplication(),
+                              attempt.getResultAttempt(),
+                              correct)
+              ).getJson());
   }
 
   @Test
   public void getUserStats() throws Exception {
-    User user = new User("john");
-    Multiplication multiplication = new Multiplication(50, 70);
-    MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3500, true);
-    List<MultiplicationResultAttempt> recentAttempts = Lists.newArrayList(attempt, attempt);
-    given(multiplicationService.getStatsForUser("john_doe")).willReturn(recentAttempts);
+      // given
+      User user = new User("john_doe");
+      Multiplication multiplication = new Multiplication(50, 70);
+      MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(
+              user, multiplication, 3500, true);
+      List<MultiplicationResultAttempt> recentAttempts = Lists.newArrayList(attempt, attempt);
+      given(multiplicationService
+              .getStatsForUser("john_doe"))
+              .willReturn(recentAttempts);
 
-    MockHttpServletResponse response = mvc.perform(
-      get("/results").param("alias", "john_doe")
-    ).andReturn().getResponse();
+      // when
+      MockHttpServletResponse response = mvc.perform(
+              get("/results").param("alias", "john_doe"))
+              .andReturn().getResponse();
 
-    assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    assertThat(response.getContentAsString()).isEqualTo(
-      jsonResultAttemptList.write(recentAttempts).getJson());
+      // then
+      assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+      assertThat(response.getContentAsString()).isEqualTo(
+              jsonResultAttemptList.write(
+                      recentAttempts
+              ).getJson());
   }
 
   @Test
   public void getResultByIdTest() throws Exception {
-    User user = new User("john_doe");
-    Multiplication multiplication = new Multiplication(50, 70);
-    MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3500, true);
-    given(multiplicationService.getResultById(4L)).willReturn(attempt);
+      // given
+      User user = new User("john_doe");
+      Multiplication multiplication = new Multiplication(50, 70);
+      MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(
+              user, multiplication, 3500, true);
+      given(multiplicationService.getResultById(4L)).willReturn(attempt);
 
-    MockHttpServletResponse response = mvc.perform(get("/results/4")).andReturn().getResponse();
+      // when
+      MockHttpServletResponse response = mvc.perform(
+              get("/results/4"))
+              .andReturn().getResponse();
 
-    assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-    assertThat(response.getContentAsString()).isEqualTo(jsonResult.write(attempt).getJson());
+      // then
+      assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+      assertThat(response.getContentAsString()).isEqualTo(
+              jsonResultAttempt.write(attempt).getJson());
   }
 }

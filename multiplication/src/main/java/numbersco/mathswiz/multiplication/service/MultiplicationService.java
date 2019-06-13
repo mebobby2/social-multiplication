@@ -11,7 +11,7 @@ import numbersco.mathswiz.multiplication.domain.MultiplicationResultAttempt;
 public interface MultiplicationService {
 
   Multiplication createRandomMultiplication();
-  boolean checkAttempt(final MultiplicationResultAttempt resultAttempt);
+  MultiplicationResultAttempt checkAttempt(final MultiplicationResultAttempt resultAttempt);
   List<MultiplicationResultAttempt> getStatsForUser(String userAlias);
   MultiplicationResultAttempt getResultById(final Long resultId);
 }
