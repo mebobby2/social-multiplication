@@ -47,10 +47,17 @@
 2. ```java -jar ~/Documents/development/jetty/start.jar```
 3. Visit: http://localhost:9090/ui
 
-## Tests
+## Unit Tests
 1 ```cd multiplication```
 2 ```./mvnw test```
 3 ```./mvnw -Dtest=MultiplicationServiceTest test``` (run a specific test)
+
+1 ```cd gamification```
+2 ```./mvnw test```
+
+### End-2-End Tests
+1 ```cd tests_e2e```
+2 ```./mvnw test```
 
 ## Deploying
 1 ```cd multiplication```
