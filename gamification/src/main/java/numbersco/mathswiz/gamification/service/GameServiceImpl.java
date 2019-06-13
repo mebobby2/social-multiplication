@@ -117,6 +117,11 @@ public class GameServiceImpl implements GameService {
                 .map(BadgeCard::getBadge).collect(Collectors.toList()));
     }
 
+    @Override
+    public ScoreCard getScoreForAttempt(final Long attemptId) {
+        return scoreCardRepository.findByAttemptId(attemptId);
+    }
+
     /**
      * Convenience method to check the current score against
      * the different thresholds to gain badges.

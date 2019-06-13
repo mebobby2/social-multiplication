@@ -1,6 +1,7 @@
 package numbersco.mathswiz.gamification.service;
 
 import numbersco.mathswiz.gamification.domain.GameStats;
+import numbersco.mathswiz.gamification.domain.ScoreCard;
 
 /**
  * GameService
@@ -8,4 +9,5 @@ import numbersco.mathswiz.gamification.domain.GameStats;
 public interface GameService {
   GameStats newAttemptForUser(Long userId, Long attemptId, boolean correct);
   GameStats retrieveStatsForUser(Long userId);
+  ScoreCard getScoreForAttempt(Long attemptId);
 }
