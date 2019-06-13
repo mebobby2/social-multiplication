@@ -170,6 +170,8 @@ To create a new jetty base:
 https://github.com/microservices-practical
 
 ## Upto
-Page 266
+Page 288
+
+EXERCISE
 
 Hystrix from a REST Client
