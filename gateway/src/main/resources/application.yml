@@ -21,6 +21,10 @@ zuul:
       path: /stats/**
       serviceId: gamification
       strip-prefix: false
+    scores:
+      path: /scores/**
+      serviceId: gamification
+      strip-prefix: false
 
 endpoints:
   trace:
